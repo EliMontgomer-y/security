@@ -47,6 +47,7 @@ The `decrypt()` function returns the original plaintext message as a string.
 ### Resetting the module:
 - If you delete files labeled `security-*` or the `secret.key` file, the module will generate a new key the next time it is used.
 - **All messages encrypted with the old key will no longer be decryptable.**
+- You may use the `reset-module()` function to reset the module.
 
 ### Dependencies:
 - The package requires the `cryptography` library, which is automatically installed when you install the `security` package.

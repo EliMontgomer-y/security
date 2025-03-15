@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 import os
+import glob
 
 # Global variables
 _working_directory = os.getcwd()  # Default to the current working directory
@@ -78,3 +79,19 @@ def decrypt(encrypted_message: bytes) -> str:
         _initialize_cipher()
     decrypted_message = _cipher.decrypt(encrypted_message)
     return decrypted_message.decode()
+
+def reset_module():
+    """
+    Resets the module by deleting all security-related files (e.g., secret.key)
+    and generating a new key.
+    """
+    global _key, _cipher
+    # Delete all files matching the pattern "security-*" in the working directory
+    for file_path in glob.glob(os.path.join(_working_directory, "security-*")):
+        try:
+            os.remove(file_path)
+            print(f"Deleted: {file_path}")
+        except Exception as e:
+            print(f"Error deleting {file_path}: {e}")
+    # Reinitialize the cipher with a new key
+    _initialize_cipher()
